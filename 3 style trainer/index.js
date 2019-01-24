@@ -8,4 +8,4 @@ function scrambleCube(algorithm) {
   return Cube.inverse(solution);
 }
 
-Document.getElementByID('scramble').innerHTML = scrambleCube("R U R' U'); // test
+Document.getElementByID('scramble').innerHTML = scrambleCube("R U R' U'"); // test
