@@ -1,6 +1,6 @@
 const cube = new Cube();
 
-cube.initSolver();
+Cube.initSolver();
 
 function scrambleCube(algorithm) {
   cube.move(algorithm);
