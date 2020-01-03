@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<style>
+	.red{
+		color: red;
+	}
+</style>
+<script>
+	function isLeap(year){
+		if(year%4==0 && (year&100!=0 || year%400==0)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	function getWeekday(day, month, year){
+		let monthCode = [6,2,2,5,0,3,5,1,4,6,2,4];
+		let centuryCode = [0,5,3,1];
+		let century = Math.floor(year/100);
+		let yearCode = ((year%100) + Math.floor((year%100)/4))%7;
+		let answer = (day+monthCode[month-1]+centuryCode[century%4]+yearCode)%7;
+		if (isLeap(year) && (month==1 || month==2)){
+			answer-=1;
+		}
+		return answer;
+	}
+	function weekdayName(x){
+		let weekday = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+		return weekday[x];
+	}
+	function randomDate(minYear, maxYear){
+		let randYear = Math.floor(Math.random() * (1+maxYear-minYear))+minYear;
+		let monthValue = [31,28,31,30,31,30,31,31,30,31,30,31];
+		if (isLeap(randYear)){
+			monthValue[1] = 29;
+		}
+		let randMonth = Math.floor(Math.random()*12)+1;
+		let randDay = Math.floor(Math.random()*monthValue[randMonth-1])+1;
+		let weekday = getWeekday(randDay,randMonth,randYear);
+		return [randDay+"/"+randMonth+"/"+randYear, weekday];
+	}
+	let answer = 0;
+	let input = 0;
+	let flag = 0;
+	let date;
+	let temp;
+	function rutina(){
+		input = document.getElementById('typer').value;
+		if(input%7==answer){
+			document.getElementById('score').innerHTML++;
+			if(flag==1){
+				temp = document.getElementById("historial").innerHTML;
+				document.getElementById("historial").innerHTML = (date+" ("+weekdayName(input%7)+")<br />") + temp;
+			}
+		}
+		else{
+			if(flag==1){
+				document.getElementById('score').innerHTML -= 2;
+				temp = document.getElementById("historial").innerHTML;
+				document.getElementById("historial").innerHTML = ("<strong><span class='red'>(Input: "+weekdayName(input%7)+") "+date+" (Answer: "+weekdayName(answer)+")<br /></span></strong>") + temp;
+			}
+			else{
+				scorebox.hidden = !scorebox.hidden;
+				flag = 1;
+			}
+		}
+		date = randomDate(1900,2099);
+		answer = date[1];
+		date = date[0];
+		document.getElementById('screen').innerHTML = date;
+		document.getElementById('typer').value = '';
+	}
+</script>
+<head>
+	<title>
+		"Versión 3"
+	</title>
+</head>
+<body>
+	<div style="text-align: center;">
+		<h1 id="screen"></h1>
+		<input size="50" value="some sentence i cant understand" oninput="rutina();" id="typer" type="text">
+		<div id="scorebox" hidden>
+			<h1>Puntaje: </h1><span style="font-size: 30px;" id="score">0</span>
+		</div>
+		<p id="historial"></p>
+	</div>
+</body>
+</html>
