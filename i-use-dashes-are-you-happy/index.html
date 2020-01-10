@@ -1,4 +1,5 @@
-<html lang="en-AU"><head><style>
+<html lang="en-AU"><head>
+    <style>
     body {
         background-color: #CCFF00;
     }
@@ -9,7 +10,20 @@
         color: black;
         vertical-align: middle;
     }
-    </style></head><body>
+    </style>
+    <script>
+        function a() {
+            var colour = "#";
+            
+            for (int i = 0; i < 6; i++) {
+                colour += Math.floor(Math.random()*16).toString(16);
+            }
+            document.body.style.background-colour = colour;
+            setTimeout(a, 10);
+        }
+    </script>
+    </head>
+    <body id="body">
     <a href="https://discord.gg/B6GmMgq" id="text">https://discord.gg/B6GmMgq<br>https://discord.gg/9N5TQeQ</a>
-    <input>text</input>
+    <input>
 </body></html>
